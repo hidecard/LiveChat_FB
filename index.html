@@ -54,78 +54,18 @@
 </head>
 <body>
 
-  <!-- Messenger Chat Plugin -->
-  <div id="fb-root"></div>
-  <div id="fb-customer-chat" class="fb-customerchat"></div>
-
-  <script>
-    var chatbox = document.getElementById('fb-customer-chat');
-    chatbox.setAttribute("page_id", "110057677543967");
-    chatbox.setAttribute("attribution", "biz_inbox");
+  <!-- Start of Tawk.to Script -->
+  <script type="text/javascript">
+  var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();
+  (function(){
+  var s1=document.createElement("script"),s0=document.getElementsByTagName("script")[0];
+  s1.async=true;
+  s1.src='https://embed.tawk.to/xxxxxxxxx/1xxxxxxx'; // <-- သင့် Tawk.to ID နဲ့ ပြောင်းပါ
+  s1.charset='UTF-8';
+  s1.setAttribute('crossorigin','*');
+  s0.parentNode.insertBefore(s1,s0);
+  })();
   </script>
-
-  <script>
-    window.fbAsyncInit = function () {
-      FB.init({
-        xfbml: true,
-        version: 'v19.0',
-        appId: '886883879882117' // Optional: Your App ID
-      });
-    };
-
-    (function (d, s, id) {
-      var js, fjs = d.getElementsByTagName(s)[0];
-      if (d.getElementById(id)) return;
-      js = d.createElement(s);
-      js.id = id;
-      js.src = "https://connect.facebook.net/en_US/sdk/xfbml.customerchat.js";
-      fjs.parentNode.insertBefore(js, fjs);
-    })(document, 'script', 'facebook-jssdk');
-
-    // Optional error handling if SDK fails to load
-    window.addEventListener('error', function (e) {
-      if (e.target.tagName === 'SCRIPT' && e.target.src.includes('facebook.net')) {
-        console.error("Failed to load Facebook SDK.");
-      }
-    }, true);
-  </script>
-
-  <!-- Custom Button -->
-  <div id="custom-messenger-btn" title="Chat with us">
-    <svg viewBox="0 0 36 36">
-      <path d="M18 2C9.163 2 2 8.797 2 17.5c0 4.5 2.063 8.5 5.5 11.25V34l5.063-2.75c1.625.438 3.375.75 5.438.75 8.837 0 16-6.797 16-15.5S26.837 2 18 2zm.25 21.25l-4.25-4.5-7.5 4.5 8.5-9.25 4.25 4.5 7.5-4.5-8.5 9.25z"/>
-    </svg>
-  </div>
-
-  <!-- Enable Button When Ready -->
-  <script>
-    function enableMessengerButtonWhenReady() {
-      if (typeof FB !== 'undefined' && FB.CustomerChat && typeof FB.CustomerChat.showDialog === 'function') {
-        document.getElementById('custom-messenger-btn').style.display = 'flex';
-
-        document.getElementById('custom-messenger-btn').onclick = function () {
-          FB.CustomerChat.showDialog();
-          const iframe = document.querySelector('.fb-customerchat iframe');
-          if (iframe) {
-            iframe.style.visibility = 'visible';
-          }
-        };
-      } else {
-        setTimeout(enableMessengerButtonWhenReady, 300);
-      }
-    }
-
-    enableMessengerButtonWhenReady();
-
-    // Optional: Click outside to hide Messenger iframe
-    document.addEventListener('click', function (e) {
-      const chatIframe = document.querySelector('.fb-customerchat iframe');
-      const btn = document.getElementById('custom-messenger-btn');
-      if (chatIframe && !btn.contains(e.target) && !chatIframe.contains(e.target)) {
-        chatIframe.style.visibility = 'hidden';
-      }
-    });
-  </script>
-
+  <!-- End of Tawk.to Script -->
 </body>
 </html>
