@@ -4,41 +4,8 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Messenger Chat</title>
-</head>
-<body>
-
-  <!-- Messenger Chat Plugin Code Start -->
-  <div id="fb-root"></div>
-  <div id="fb-customer-chat" class="fb-customerchat"></div>
-
-  <script>
-    var chatbox = document.getElementById('fb-customer-chat');
-    chatbox.setAttribute("page_id", "110057677543967");
-    chatbox.setAttribute("attribution", "biz_inbox");
-  </script>
-
-  <script>
-    window.fbAsyncInit = function () {
-      FB.init({
-        xfbml: true,
-        version: 'v19.0',
-         appId: '886883879882117' // Optional: Add if you have an App ID
-      });
-    };
-
-    (function (d, s, id) {
-      var js, fjs = d.getElementsByTagName(s)[0];
-      if (d.getElementById(id)) return;
-      js = d.createElement(s);
-      js.id = id;
-      js.src = "https://connect.facebook.net/en_US/sdk/xfbml.customerchat.js";
-      fjs.parentNode.insertBefore(js, fjs);
-    })(document, 'script', 'facebook-jssdk');
-  </script>
-  <!-- Messenger Chat Plugin Code End -->
-
-  <!-- Custom Messenger Chat Button -->
   <style>
+    /* Custom Messenger Button */
     #custom-messenger-btn {
       position: fixed;
       bottom: 24px;
@@ -49,7 +16,7 @@
       width: 56px;
       height: 56px;
       box-shadow: 0 4px 16px rgba(0, 0, 0, 0.18);
-      display: none; /* Hidden by default */
+      display: none;
       align-items: center;
       justify-content: center;
       cursor: pointer;
@@ -70,24 +37,74 @@
     .fb-customerchat iframe {
       visibility: hidden;
     }
-  </style>
 
+    /* Responsive size for smaller screens */
+    @media (max-width: 600px) {
+      #custom-messenger-btn {
+        width: 48px;
+        height: 48px;
+      }
+
+      #custom-messenger-btn svg {
+        width: 24px;
+        height: 24px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Messenger Chat Plugin -->
+  <div id="fb-root"></div>
+  <div id="fb-customer-chat" class="fb-customerchat"></div>
+
+  <script>
+    var chatbox = document.getElementById('fb-customer-chat');
+    chatbox.setAttribute("page_id", "110057677543967");
+    chatbox.setAttribute("attribution", "biz_inbox");
+  </script>
+
+  <script>
+    window.fbAsyncInit = function () {
+      FB.init({
+        xfbml: true,
+        version: 'v19.0',
+        appId: '886883879882117' // Optional: Your App ID
+      });
+    };
+
+    (function (d, s, id) {
+      var js, fjs = d.getElementsByTagName(s)[0];
+      if (d.getElementById(id)) return;
+      js = d.createElement(s);
+      js.id = id;
+      js.src = "https://connect.facebook.net/en_US/sdk/xfbml.customerchat.js";
+      fjs.parentNode.insertBefore(js, fjs);
+    })(document, 'script', 'facebook-jssdk');
+
+    // Optional error handling if SDK fails to load
+    window.addEventListener('error', function (e) {
+      if (e.target.tagName === 'SCRIPT' && e.target.src.includes('facebook.net')) {
+        console.error("Failed to load Facebook SDK.");
+      }
+    }, true);
+  </script>
+
+  <!-- Custom Button -->
   <div id="custom-messenger-btn" title="Chat with us">
-    <!-- Messenger SVG Icon -->
     <svg viewBox="0 0 36 36">
       <path d="M18 2C9.163 2 2 8.797 2 17.5c0 4.5 2.063 8.5 5.5 11.25V34l5.063-2.75c1.625.438 3.375.75 5.438.75 8.837 0 16-6.797 16-15.5S26.837 2 18 2zm.25 21.25l-4.25-4.5-7.5 4.5 8.5-9.25 4.25 4.5 7.5-4.5-8.5 9.25z"/>
     </svg>
   </div>
 
+  <!-- Enable Button When Ready -->
   <script>
-    // Show the button and enable Messenger chat when ready
     function enableMessengerButtonWhenReady() {
       if (typeof FB !== 'undefined' && FB.CustomerChat && typeof FB.CustomerChat.showDialog === 'function') {
         document.getElementById('custom-messenger-btn').style.display = 'flex';
 
         document.getElementById('custom-messenger-btn').onclick = function () {
           FB.CustomerChat.showDialog();
-          // Reveal Messenger iframe manually
           const iframe = document.querySelector('.fb-customerchat iframe');
           if (iframe) {
             iframe.style.visibility = 'visible';
@@ -99,6 +116,15 @@
     }
 
     enableMessengerButtonWhenReady();
+
+    // Optional: Click outside to hide Messenger iframe
+    document.addEventListener('click', function (e) {
+      const chatIframe = document.querySelector('.fb-customerchat iframe');
+      const btn = document.getElementById('custom-messenger-btn');
+      if (chatIframe && !btn.contains(e.target) && !chatIframe.contains(e.target)) {
+        chatIframe.style.visibility = 'hidden';
+      }
+    });
   </script>
 
 </body>
